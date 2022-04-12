@@ -1,0 +1,311 @@
+---
+title: "Analysis"
+author: "Thomas Butler"
+date: "4/12/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library("rjson")
+library("tidyverse")
+library("viridis")
+```
+
+
+```{r json_load, include=FALSE}
+json_dataA <- fromJSON(file="../analysis/wordle_actual.json")
+json_data128H <- fromJSON(file = "../analysis/wordle_128_halton.json")
+json_data128S <- fromJSON(file = "../analysis/wordle_128_sobol.json")
+json_data128R <- fromJSON(file = "../analysis/wordle_128_random.json")
+json_data512H <- fromJSON(file = "../analysis/wordle_512_halton.json")
+json_data512S <- fromJSON(file = "../analysis/wordle_512_sobol.json")
+json_data512R <- fromJSON(file = "../analysis/wordle_512_random.json")
+json_data2048H <- fromJSON(file = "../analysis/wordle_2048_halton.json")
+json_data2048S <- fromJSON(file = "../analysis/wordle_2048_sobol.json")
+json_data2048R <- fromJSON(file = "../analysis/wordle_2048_random.json")
+```
+
+
+```{r dataframe, echo=FALSE}
+n <- names(json_dataA)
+all_data <- data.frame(c(json_dataA, full_name = "actual", category = "actual")) %>% 
+  rbind(c(json_data128H[names(json_data128H) %in% n == TRUE], full_name = "Halton 0128", category = "Halton")) %>% 
+  rbind(c(json_data512H[names(json_data512H) %in% n == TRUE], full_name = "Halton 0512", category = "Halton")) %>% 
+  rbind(c(json_data2048H[names(json_data2048H) %in% n == TRUE], full_name = "Halton 2048", category = "Halton")) %>% 
+  rbind(c(json_data128S[names(json_data128S) %in% n == TRUE], full_name = "Sobol 0128", category = "Sobol")) %>% 
+  rbind(c(json_data512S[names(json_data512S) %in% n == TRUE], full_name = "Sobol 0512", category = "Sobol")) %>% 
+#  rbind(c(json_data2048S[names(json_data2048S) %in% n == TRUE], full_name = "Sobol 2048", category = "Sobol")) %>% 
+  rbind(c(json_data128R[names(json_data128R) %in% n == TRUE], full_name = "Random 0128", category = "Random")) %>% 
+  rbind(c(json_data512R[names(json_data512R) %in% n == TRUE], full_name = "Random 0512", category = "Random"))
+#  rbind(c(json_data2048R[names(json_data2048R) %in% n == TRUE], full_name = "Random 2048", category = "Random"))
+```
+
+```{r ariel-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=ariel, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$ariel, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: ariel",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r artel-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=artel, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$artel, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: artel",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+```{r laser-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=laser, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$laser, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: laser",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r orate-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=orate, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$orate, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: orate",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r raile-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=raile, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$raile, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: raile",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r raine-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=raine, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$raine, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: raine",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r realo-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=realo, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$realo, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: realo",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r roate-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=roate, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$roate, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: roate",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r soare-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=soare, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$soare, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: soare",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r stoae-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=stoae, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$stoae, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: stoae",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r strae-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=strae, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$strae, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: strae",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r taler-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=taler, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$taler, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: taler",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r arise-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=arise, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$arise, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: arise",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r arose-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=arose, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$arose, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: arose",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r irate-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=irate, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$irate, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: irate",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r raise-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=raise, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$raise, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: raise",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r snare-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=snare, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$snare, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: snare",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
+
+```{r stare-plot}
+all_data %>% filter(full_name != "actual") %>% 
+  ggplot(aes(x=stare, y=full_name, fill=category)) +
+  geom_col() +
+  geom_vline(aes(xintercept = json_dataA$stare, color = "Actual")) + 
+  scale_fill_viridis(discrete = T) +
+  theme_bw() +
+  labs(title = "Expected possibilities remaining",
+       subtitle = "Guess: stare",
+       x = "Excpected # of possibilities remaining",
+       y = "Algo used",
+       fill = "Algorithm Category",
+       color  = NULL)
+```
