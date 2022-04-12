@@ -35,10 +35,10 @@ all_data <- data.frame(c(json_dataA, full_name = "actual", category = "actual"))
   rbind(c(json_data2048H[names(json_data2048H) %in% n == TRUE], full_name = "Halton 2048", category = "Halton")) %>% 
   rbind(c(json_data128S[names(json_data128S) %in% n == TRUE], full_name = "Sobol 0128", category = "Sobol")) %>% 
   rbind(c(json_data512S[names(json_data512S) %in% n == TRUE], full_name = "Sobol 0512", category = "Sobol")) %>% 
-#  rbind(c(json_data2048S[names(json_data2048S) %in% n == TRUE], full_name = "Sobol 2048", category = "Sobol")) %>% 
+  rbind(c(json_data2048S[names(json_data2048S) %in% n == TRUE], full_name = "Sobol 2048", category = "Sobol")) %>% 
   rbind(c(json_data128R[names(json_data128R) %in% n == TRUE], full_name = "Random 0128", category = "Random")) %>% 
-  rbind(c(json_data512R[names(json_data512R) %in% n == TRUE], full_name = "Random 0512", category = "Random"))
-#  rbind(c(json_data2048R[names(json_data2048R) %in% n == TRUE], full_name = "Random 2048", category = "Random"))
+  rbind(c(json_data512R[names(json_data512R) %in% n == TRUE], full_name = "Random 0512", category = "Random")) %>% 
+  rbind(c(json_data2048R[names(json_data2048R) %in% n == TRUE], full_name = "Random 2048", category = "Random"))
 ```
 
 ```{r ariel-plot}
